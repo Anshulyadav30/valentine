@@ -69,11 +69,16 @@ button {
 }
 
 .gallery img {
-  width: 90px;
-  height: 90px;
-  border-radius: 15px;
+  width: 140px;
+  height: 140px;
+  border-radius: 22px;
   object-fit: cover;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.35);
+  transition: transform 0.4s ease;
+}
+
+.gallery img:hover {
+  transform: scale(1.08);
 }
 
 #countdown {
@@ -103,8 +108,9 @@ button {
 
 <!-- MUSIC -->
 <audio id="music" loop autoplay muted>
-  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_5b8f7d8b8f.mp3" type="audio/mpeg">
+  <source src="https://cdn.pixabay.com/audio/2023/03/28/audio_5fdd1c5c6d.mp3" type="audio/mpeg">
 </audio>
+
 
 
 
@@ -139,9 +145,11 @@ button {
 <script>
 
 // AUTO PLAY MUSIC WITH UNMUTE ON FIRST CLICK
+// AUTO PLAY MUSIC – UNMUTE ON FIRST INTERACTION
 document.addEventListener("click", () => {
   const music = document.getElementById("music");
   music.muted = false;
+  music.volume = 0.6;
   music.play();
 }, { once: true });
 
@@ -211,5 +219,6 @@ function toggleMusic() {
 
 </body>
 </html>
+
 
 
