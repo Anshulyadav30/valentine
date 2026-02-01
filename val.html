@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #ff5f9e, #ff8fab);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  color: #fff;
+  text-align: center;
+}
+
+.container {
+  z-index: 2;
+  padding: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+h1 span {
+  animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #fff; }
+  to { text-shadow: 0 0 25px #fff; }
+}
+
+button {
+  padding: 14px 30px;
+  border-radius: 30px;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 10px;
+}
+
+.yes {
+  background: #fff;
+  color: #ff4f81;
+}
+
+.no {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+  position: absolute;
+}
+
+.gallery {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.gallery img {
+  width: 90px;
+  height: 90px;
+  border-radius: 15px;
+  object-fit: cover;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+#countdown {
+  font-size: 1.2rem;
+  margin: 10px 0;
+}
+
+/* Hearts */
+.heart {
+  position: absolute;
+  bottom: -10px;
+  font-size: 20px;
+  animation: floatUp 5s linear infinite;
+}
+
+@keyframes floatUp {
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="music" loop autoplay muted>
+  <source src="https://cdn.pixabay.com/audio/2022/10/30/audio_5b8f7d8b8f.mp3" type="audio/mpeg">
+</audio>
+
+
+
+<!-- FIRST PAGE -->
+<div class="container" id="questionPage">
+  <h1>Hey <span>❤️ MY TWIN FLAME ❤️</span></h1>
+  <p>I’ve been meaning to ask you something…</p>
+
+  <div id="countdown"></div>
+
+  <div class="gallery">
+    <img src="photo1.jpg">
+    <img src="photo2.jpg">
+    <img src="photo3.jpg">
+    <img src="photo4.jpg">
+  </div>
+
+  <h2>Will you be my Valentine? 💘</h2>
+
+  <button class="yes" onclick="sayYes()">YES 😍</button>
+  <button class="no" onmouseover="moveNo()">NO 🙃</button>
+</div>
+
+<!-- YES PAGE -->
+<div class="container hidden" id="yesPage">
+  <h1>🎉 SHE SAID YES ❤️ 🎉</h1>
+  <p>GHENCHANA TING DING DING DING DING 🥹💖</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<script>
+
+// AUTO PLAY MUSIC WITH UNMUTE ON FIRST CLICK
+document.addEventListener("click", () => {
+  const music = document.getElementById("music");
+  music.muted = false;
+  music.play();
+}, { once: true });
+
+
+// YES CLICK
+function sayYes() {
+  document.getElementById("questionPage").classList.add("hidden");
+  document.getElementById("yesPage").classList.remove("hidden");
+  document.getElementById("music").play();
+
+  // Fireworks
+  const duration = 4000;
+  const end = Date.now() + duration;
+
+  (function frame() {
+    confetti({
+      particleCount: 6,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 }
+    });
+    confetti({
+      particleCount: 6,
+      angle: 120,
+      spread: 55,
+      origin: { x: 1 }
+    });
+    if (Date.now() < end) {
+      requestAnimationFrame(frame);
+    }
+  })();
+}
+
+// NO BUTTON RUN
+function moveNo() {
+  const btn = document.querySelector('.no');
+  btn.style.left = Math.random() * 80 + "vw";
+  btn.style.top = Math.random() * 80 + "vh";
+}
+
+// FLOATING HEARTS
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 5000);
+}, 300);
+
+// COUNTDOWN
+const valentine = new Date("Feb 14, 2026 00:00:00").getTime();
+setInterval(() => {
+  const now = new Date().getTime();
+  const diff = valentine - now;
+  const d = Math.floor(diff / (1000*60*60*24));
+  document.getElementById("countdown").innerHTML =
+    `⏳ ${d} days left for Valentine’s Day`;
+}, 1000);
+
+// MUSIC TOGGLE
+function toggleMusic() {
+  const music = document.getElementById("music");
+  music.paused ? music.play() : music.pause();
+}
+</script>
+
+</body>
+</html>
